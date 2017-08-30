@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link href="css/style.css" rel="stylesheet"> -->
+    </head>
+    <body>
+    Hello,{{ user.name }}!    |   <a href="/"> Logout </a>
+    <p>Your WishList:</p>
+  <table>
+      <tr>
+          <td>Item</td>
+          <td>Added by</td>
+          <td>Date Added</td>
+          <td>Action</td>
+      </tr>
+        {% for product in products %}
+        <tr>
+          <td><a href="/show_product/{{ product.id }}">{{ product.product_name }}</a></td>
+          <td>{{ product.added_by }}</td>
+          <td>{{ product.created_at }}</td>
+          <!-- <td>{{ user.id }}</td> -->
+
+           {% if product.added_by_id == user.id  %}
+          <td><a href="/remove/{{ user.id }}/{{ product.id }}">Delete</a></td>
+          {% else %}
+          <td><a href="/remove/{{ product.added_by_id }}/{{ product.id }}">Remove from wishlist</a></td>
+          {% endif %} 
+      </tr>
+
+        {% endfor %}
+
+  </table>
+
+   <p>Other User's WishList:</p>
+  <table>
+      <tr>
+          <td>Item</td>
+          <td>Added by</td>
+          <td>Date Added</td>
+          <td>Action</td>
+      </tr>
+        </tr>
+        {% for all in alls %}
+        <tr>
+          <td><a href="/show_product/{{ all.id }}">{{ all.product_name }}</a></td>
+          <td>{{ all.added_by }}</td>
+          <td>{{ all.created_at }}</td>
+          <td><a href="/add_list/{{ all.id }}">Add to my wishlist</a></td>
+      </tr>
+
+        {% endfor %}
+  </table>
+    <a href="/wish_items/create/{{ user.id }}">Add Items</a>
+    </body>
+</html>
